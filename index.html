@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vibe Coding</title>
+  <title>Vibe Coding — Будущее разработки</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -11,10 +11,12 @@
       font-family:system-ui,-apple-system,sans-serif;
       background:#0f0c29;
       color:#fff;
-      line-height:1.6
+      line-height:1.6;
+      overflow-x:hidden
     }
-    section{padding:4rem 2rem;max-width:1100px;margin:0 auto}
-    h2{font-size:2rem;margin-bottom:2rem;text-align:center;background:linear-gradient(90deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+    h2{font-size:2.2rem;margin-bottom:1rem;text-align:center;background:linear-gradient(90deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .section-sub{text-align:center;opacity:.6;margin-bottom:3rem;font-size:1.05rem}
 
     /* Hero */
     .hero{
@@ -24,21 +26,48 @@
       align-items:center;
       justify-content:center;
       text-align:center;
-      background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)
+      background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+      position:relative;
+      overflow:hidden
+    }
+    .hero::before{
+      content:'';
+      position:absolute;
+      width:600px;height:600px;
+      background:radial-gradient(circle,rgba(247,151,30,.12),transparent 70%);
+      top:-200px;right:-200px;
+      pointer-events:none
+    }
+    .hero::after{
+      content:'';
+      position:absolute;
+      width:500px;height:500px;
+      background:radial-gradient(circle,rgba(255,210,0,.08),transparent 70%);
+      bottom:-200px;left:-200px;
+      pointer-events:none
     }
     .hero h1{
       font-size:clamp(2.5rem,8vw,5rem);font-weight:800;
       background:linear-gradient(90deg,#f7971e,#ffd200);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-      margin-bottom:1rem
+      margin-bottom:1rem;
+      position:relative;z-index:1
     }
-    .hero p{font-size:1.25rem;max-width:600px;opacity:.85;margin-bottom:2.5rem}
+    .hero p{font-size:1.25rem;max-width:640px;opacity:.85;margin-bottom:2.5rem;position:relative;z-index:1}
     .badge{
       display:inline-flex;gap:.5rem;align-items:center;
       background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
-      padding:.5rem 1.25rem;border-radius:50px;font-size:.875rem;margin-bottom:2rem
+      padding:.5rem 1.25rem;border-radius:50px;font-size:.875rem;margin-bottom:2rem;
+      backdrop-filter:blur(4px);position:relative;z-index:1
     }
     .badge span{color:#ffd200;font-weight:600}
+    .hero-stats{
+      display:flex;gap:3rem;margin-top:3rem;
+      position:relative;z-index:1
+    }
+    .hero-stats div{text-align:center}
+    .hero-stats .num{font-size:2rem;font-weight:800;background:linear-gradient(90deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-stats .label{font-size:.8rem;opacity:.5;text-transform:uppercase;letter-spacing:.05em}
 
     /* CTA */
     .cta{
@@ -46,80 +75,283 @@
       background:linear-gradient(90deg,#f7971e,#ffd200);
       color:#0f0c29;font-weight:700;font-size:1.125rem;
       padding:1rem 2.5rem;border-radius:50px;text-decoration:none;
-      transition:transform .2s,box-shadow .2s
+      transition:transform .2s,box-shadow .2s;
+      border:none;cursor:pointer
     }
     .cta:hover{transform:scale(1.05);box-shadow:0 8px 30px rgba(247,151,30,.4)}
+    .cta-outline{
+      display:inline-block;
+      border:2px solid rgba(247,151,30,.6);
+      color:#ffd200;font-weight:600;font-size:1.125rem;
+      padding:1rem 2.5rem;border-radius:50px;text-decoration:none;
+      transition:all .2s;margin-left:1rem
+    }
+    .cta-outline:hover{border-color:#ffd200;background:rgba(247,151,30,.1)}
 
     /* Features */
-    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
     .feature{
       background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
-      border-radius:16px;padding:2rem;text-align:center;
-      transition:transform .2s
+      border-radius:16px;padding:2.5rem 2rem;text-align:center;
+      transition:transform .2s,box-shadow .2s
     }
-    .feature:hover{transform:translateY(-4px)}
-    .feature .icon{font-size:2.5rem;margin-bottom:1rem}
-    .feature h3{margin-bottom:.5rem}
-    .feature p{font-size:.9rem;opacity:.7}
+    .feature:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(247,151,30,.1)}
+    .feature .icon{font-size:3rem;margin-bottom:1rem}
+    .feature h3{margin-bottom:.5rem;font-size:1.2rem}
+    .feature p{font-size:.95rem;opacity:.7;line-height:1.7}
 
     /* How it works */
-    .steps{display:flex;flex-direction:column;gap:1.5rem;max-width:600px;margin:0 auto}
+    .steps{display:flex;flex-direction:column;gap:2rem;max-width:640px;margin:0 auto}
     .step{display:flex;align-items:center;gap:1.5rem}
     .step-num{
-      width:48px;height:48px;border-radius:50%;
+      width:52px;height:52px;border-radius:50%;
       background:linear-gradient(135deg,#f7971e,#ffd200);
       color:#0f0c29;font-weight:800;font-size:1.25rem;
       display:flex;align-items:center;justify-content:center;flex-shrink:0
     }
-    .step p{opacity:.85}
+    .step-content{}
+    .step-content strong{display:block;margin-bottom:.2rem}
+    .step-content p{opacity:.75;font-size:.95rem}
+
+    /* Pricing */
+    .pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-top:2rem}
+    .plan{
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;padding:2.5rem 2rem;text-align:center;
+      transition:transform .2s
+    }
+    .plan:hover{transform:translateY(-4px)}
+    .plan.featured{
+      border-color:#f7971e;
+      background:rgba(247,151,30,.08);
+      position:relative
+    }
+    .plan.featured::before{
+      content:'Популярный';
+      position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+      background:linear-gradient(90deg,#f7971e,#ffd200);
+      color:#0f0c29;font-size:.75rem;font-weight:700;
+      padding:.25rem 1rem;border-radius:50px;text-transform:uppercase
+    }
+    .plan .price{font-size:2.5rem;font-weight:800;margin:1rem 0}
+    .plan .price span{font-size:1rem;font-weight:400;opacity:.5}
+    .plan ul{list-style:none;margin:1.5rem 0;text-align:left}
+    .plan ul li{padding:.4rem 0;font-size:.9rem;opacity:.75}
+    .plan ul li::before{content:'✓ ';color:#ffd200;font-weight:700}
+
+    /* Testimonials */
+    .testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}
+    .testimonial{
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;padding:2rem
+    }
+    .testimonial .text{font-style:italic;opacity:.8;margin-bottom:1rem;line-height:1.7}
+    .testimonial .author{font-weight:600;font-size:.9rem}
+    .testimonial .author span{opacity:.5;font-weight:400}
+
+    /* FAQ */
+    .faq{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:.75rem}
+    .faq-item{
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;padding:1.25rem 1.5rem
+    }
+    .faq-item summary{
+      font-weight:600;cursor:pointer;list-style:none;
+      display:flex;justify-content:space-between;align-items:center
+    }
+    .faq-item summary::after{content:'+';font-size:1.25rem;opacity:.5;transition:transform .2s}
+    .faq-item[open] summary::after{content:'−'}
+    .faq-item p{margin-top:.75rem;opacity:.7;font-size:.95rem;line-height:1.7}
 
     /* Footer */
-    footer{text-align:center;padding:2rem;font-size:.8rem;opacity:.4}
+    footer{text-align:center;padding:3rem 2rem 2rem;font-size:.85rem;opacity:.4;border-top:1px solid rgba(255,255,255,.06);max-width:1100px;margin:0 auto}
+    footer a{color:#ffd200;text-decoration:none}
   </style>
 </head>
 <body>
 
+<!-- Hero -->
 <section class="hero" id="home">
   <div class="badge">⚡ Новая эра — <span>Vibe Coding 2.0</span></div>
-  <h1>Пиши код на своём вайбе</h1>
-  <p>Забудь про синтаксис. Опиши идею — ИИ сам соберёт сайт, приложение или API.</p>
-  <a href="#how" class="cta">Как это работает ↓</a>
+  <h1>Пиши код<br>на своём вайбе</h1>
+  <p>Забудь про синтаксис, компиляцию и деплой. Опиши идею своими словами — ИИ соберёт сайт, приложение или API за секунды.</p>
+  <div>
+    <a href="#pricing" class="cta">Начать бесплатно →</a>
+    <a href="#how" class="cta-outline">Как это работает</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="num">10K+</div><div class="label">проектов создано</div></div>
+    <div><div class="num">93%</div><div class="label">довольных пользователей</div></div>
+    <div><div class="num">15с</div><div class="label">среднее время генерации</div></div>
+  </div>
 </section>
 
+<!-- Features -->
 <section id="features">
-  <h2>Возможности</h2>
+  <h2>Почему Vibe Coding?</h2>
+  <p class="section-sub">Разработка будущего — без единой строчки кода вручную</p>
   <div class="features">
     <div class="feature">
       <div class="icon">🗣️</div>
-      <h3>Только текст</h3>
-      <p>Описываешь на естественном языке — получаешь готовый код</p>
+      <h3>Естественный язык</h3>
+      <p>Пишешь по-русски или по-английски — ИИ понимает контекст, интенции и сам выбирает архитектуру</p>
     </div>
     <div class="feature">
       <div class="icon">⚡</div>
-      <h3>Мгновенно</h3>
-      <p>Без настройки окружения, без npm install, без боли</p>
+      <h3>Мгновенный результат</h3>
+      <p>Никаких npm install, webpack, docker. Одна кнопка — готовый продакшн-реди проект</p>
     </div>
     <div class="feature">
-      <div class="icon">🌐</div>
+      <div class="icon">🔧</div>
       <h3>Любой стек</h3>
-      <p>Сайт, бот, API, игра — ИИ делает всё за тебя</p>
+      <p>React, Vue, Python, Go, Rust — ИИ сам выбирает лучшие инструменты под твою задачу</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🚀</div>
+      <h3>Один клик до прода</h3>
+      <p>Автоматический деплой на Vercel, Netlify, GitHub Pages — без настройки CI/CD</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🔄</div>
+      <h3>Итерации за секунды</h3>
+      <p>«Сделай кнопку синей, добавь анимацию, поменяй шрифт» — просто говори, что изменить</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🤝</div>
+      <h3>Командная работа</h3>
+      <p>Делишься промптами с командой, форкаешь проекты,мержишь изменения через AI-ревью</p>
     </div>
   </div>
 </section>
 
+<!-- How it works -->
 <section id="how">
   <h2>Как это работает</h2>
+  <p class="section-sub">Три шага от идеи до запуска</p>
   <div class="steps">
-    <div class="step"><div class="step-num">1</div><p>Описываешь идею своими словами</p></div>
-    <div class="step"><div class="step-num">2</div><p>ИИ генерирует код в реальном времени</p></div>
-    <div class="step"><div class="step-num">3</div><p>Публикуешь одним кликом на GitHub Pages</p></div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Опиши идею</strong>
+        <p>Напиши на естественном языке, что ты хочешь построить: «Сделай лендинг для стартапа с формой подписки и анимациями»</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>ИИ генерирует проект</strong>
+        <p>Нейросеть анализирует твой запрос, выбирает архитектуру, пишет код, добавляет стили и оптимизирует под мобильные</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Публикуй и улучшай</strong>
+        <p>Одним кликом выкладываешь на продакшн. Потом просишь добавить авторизацию, платёжку или админку — просто напиши об этом</p>
+      </div>
+    </div>
   </div>
-  <div style="text-align:center;margin-top:2.5rem">
-    <a href="#home" class="cta">Начать сейчас →</a>
+  <div style="text-align:center;margin-top:3rem">
+    <a href="#pricing" class="cta">Попробовать бесплатно →</a>
   </div>
 </section>
 
-<footer>Работает на промптах и чистом вайбе ✨</footer>
+<!-- Pricing -->
+<section id="pricing">
+  <h2>Тарифы</h2>
+  <p class="section-sub">Начни бесплатно — переходи на PRO, когда понадобится больше</p>
+  <div class="pricing">
+    <div class="plan">
+      <h3>Free</h3>
+      <div class="price">$0<span>/мес</span></div>
+      <ul>
+        <li>5 проектов в месяц</li>
+        <li>Базовые промпты</li>
+        <li>GitHub Pages деплой</li>
+        <li>Сообщество в Discord</li>
+      </ul>
+      <a href="#" class="cta" style="font-size:1rem;padding:.8rem 2rem">Выбрать</a>
+    </div>
+    <div class="plan featured">
+      <h3>PRO</h3>
+      <div class="price">$19<span>/мес</span></div>
+      <ul>
+        <li>Неограниченно проектов</li>
+        <li>Продвинутые промпты + контекст</li>
+        <li>Vercel / Netlify деплой</li>
+        <li>Своя AI-модель</li>
+        <li>Приоритетная поддержка</li>
+      </ul>
+      <a href="#" class="cta" style="font-size:1rem;padding:.8rem 2rem">Выбрать</a>
+    </div>
+    <div class="plan">
+      <h3>Team</h3>
+      <div class="price">$49<span>/мес</span></div>
+      <ul>
+        <li>Всё из PRO</li>
+        <li>До 10 участников команды</li>
+        <li>Общие промпты и шаблоны</li>
+        <li>AI-ревью пул-реквестов</li>
+        <li>Собственный бренд на сайте</li>
+        <li>Выделенный менеджер</li>
+      </ul>
+      <a href="#" class="cta" style="font-size:1rem;padding:.8rem 2rem">Выбрать</a>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <h2>Что говорят пользователи</h2>
+  <p class="section-sub">Уже 10 000+ разработчиков перешли на вайб</p>
+  <div class="testimonials">
+    <div class="testimonial">
+      <div class="text">«Я сделал полноценный SaaS за один вечер. Просто сидел на диване и описывал, что хочу. Ни одной строчки кода руками.»</div>
+      <div class="author">Алексей К. <span>• основатель стартапа</span></div>
+    </div>
+    <div class="testimonial">
+      <div class="text">«Vibe Coding — это как иметь 10 сеньоров в кармане. На работе перестал писать код вручную, только промпты.»</div>
+      <div class="author">Мария С. <span>• tech lead</span></div>
+    </div>
+    <div class="testimonial">
+      <div class="text">«Мы перевели всю команду на Vibe Coding. Продуктивность выросла в 5 раз. Багов меньше, чем когда писали сами.»</div>
+      <div class="author">Дмитрий В. <span>• CTO</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <h2>Часто задаваемые вопросы</h2>
+  <p class="section-sub">Всё, что ты хотел спросить о Vibe Coding</p>
+  <div class="faq">
+    <details class="faq-item">
+      <summary>Что такое Vibe Coding?</summary>
+      <p>Это новый подход к разработке, где ты не пишешь код вручную, а описываешь желаемый результат на естественном языке. ИИ генерирует весь код, а ты только направляешь его.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Нужно ли уметь программировать?</summary>
+      <p>Нет. Vibe Coding создан для тех, кто хочет создавать продукты без знания синтаксиса. Но если ты разработчик — ты будешь работать в 10 раз быстрее.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Какие технологии поддерживаются?</summary>
+      <p>Любые: фронтенд (React, Vue, Svelte), бэкенд (Python, Go, Node.js, Rust), мобильные приложения, базы данных, Telegram-боты — всё, что можно запустить.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Можно ли экспортировать код?</summary>
+      <p>Да. Ты получаешь полноценный репозиторий на GitHub, который можешь форкать, клонировать и дорабатывать как угодно.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Что если мне не понравится результат?</summary>
+      <p>Просто попроси изменить. Vibe Coding построен на итерациях: говори, что не нравится, и ИИ переделывает за секунды.</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Vibe Coding. Работает на промптах и чистом вайбе ✨</p>
+  <p style="margin-top:.5rem"><a href="#home">Наверх ↑</a></p>
+</footer>
 
 </body>
 </html>
